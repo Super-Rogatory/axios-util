@@ -1,31 +1,68 @@
 /* eslint-disable no-undef */ // axios is defined via CDN in index.html
+
+
 // GET REQUEST
 async function getTodos() {
-  const data = await axios({
-      method:'get',
-      url:'https://jsonplaceholder.typicode.com/todos'
-  });
-  console.log(data);
+  try {
+    const res = await axios.get(
+      "https://jsonplaceholder.typicode.com/todos?_limit=5"
+    );
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // POST REQUEST
-function addTodo() {
-  console.log("POST Request");
+async function addTodo() {
+  try {
+    const res = await axios.post("https://jsonplaceholder.typicode.com/todos", {
+      title: "Chukwudi Ikem",
+      completed: false,
+    });
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // PUT/PATCH REQUEST
-function updateTodo() {
-  console.log("PUT/PATCH Request");
+async function updateTodo() {
+  try {
+    const res = await axios.put(
+      "https://jsonplaceholder.typicode.com/todos/1",
+      {
+        title: "Updated, Chukwudi Ikem",
+        completed: false,
+      }
+    );
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // DELETE REQUEST
-function removeTodo() {
-  console.log("DELETE Request");
+async function removeTodo() {
+  try {
+    await axios.delete("https://jsonplaceholder.typicode.com/todos/1");
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // SIMULTANEOUS DATA
-function getData() {
-  console.log("Simultaneous Request");
+async function getData() {
+  try {
+    const res = await axios.all([
+      axios.get("https://jsonplaceholder.typicode.com/todos"),
+      axios.get("https://jsonplaceholder.typicode.com/posts"),
+    ]);
+    console.log(res[0], res[1]);
+  } catch (err) {
+      console.log(err);
+  }
 }
 
 // CUSTOM HEADERS

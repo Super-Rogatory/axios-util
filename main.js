@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */ // axios is defined via CDN in index.html
 
-
 // GET REQUEST
 async function getTodos() {
   try {
@@ -60,34 +59,42 @@ async function getData() {
       axios.get("https://jsonplaceholder.typicode.com/posts"),
     ]);
     console.log(res[0], res[1]);
+    showOutput(res[0]);
+    showOutput(res[1]);
   } catch (err) {
-      console.log(err);
+    console.log(err);
   }
 }
 
 // CUSTOM HEADERS
-function customHeaders() {
-  console.log("Custom Headers");
+async function customHeaders() {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "sometoken",
+    },
+  };
+  try {
+    const res = await axios.post(
+      "https://jsonplaceholder.typicode.com/todos",
+      {
+        title: "Chukwudi Ikem",
+        completed: false,
+      },
+      config );
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
 }
-
-// TRANSFORMING REQUESTS & RESPONSES
-function transformResponse() {
-  console.log("Transform Response");
-}
-
-// ERROR HANDLING
-function errorHandling() {
-  console.log("Error Handling");
-}
-
-// CANCEL TOKEN
-function cancelToken() {
-  console.log("Cancel Token");
-}
-
-// INTERCEPTING REQUESTS & RESPONSES
 
 // AXIOS INSTANCES
+const axiosInstance = axios.create({
+  baseURL: 'https://jsonplaceholder.typicode.com'
+});
+axiosInstance.get('/comments')
+.then(res => showOutput(res));
+
 
 // Show output in browser
 function showOutput(res) {
@@ -129,8 +136,3 @@ document.getElementById("update").addEventListener("click", updateTodo);
 document.getElementById("delete").addEventListener("click", removeTodo);
 document.getElementById("sim").addEventListener("click", getData);
 document.getElementById("headers").addEventListener("click", customHeaders);
-document
-  .getElementById("transform")
-  .addEventListener("click", transformResponse);
-document.getElementById("error").addEventListener("click", errorHandling);
-document.getElementById("cancel").addEventListener("click", cancelToken);

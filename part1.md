@@ -93,3 +93,39 @@ async function getData() {
   }
 }
 ```
+
+# Custom Headers
+## Common Example - Sending data to the headers (with authentication). For example, you might make a request to login, validate that login request, and then get back a token that you can send to the header to access protected routes.
+```
+async function customHeaders() {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "sometoken",
+    },
+  };
+  try {
+    const res = await axios.post(
+      "https://jsonplaceholder.typicode.com/todos",
+      {
+        title: "Chukwudi Ikem",
+        completed: false,
+      },
+      config );
+    showOutput(res);
+  } catch (err) {
+    console.log(err);
+  }
+}
+```
+## Notice how we are defining a config object with a headers property inside, this defines specific header data to be passed in as an argument to an Axios request.
+
+# Creating an Axios Instance
+```
+// AXIOS INSTANCES | very similar to routing when concering paths.
+const axiosInstance = axios.create({
+  baseURL: 'https://jsonplaceholder.typicode.com'
+});
+axiosInstance.get('/comments')
+.then(res => showOutput(res));
+```
